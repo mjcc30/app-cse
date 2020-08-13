@@ -1,6 +1,6 @@
 /* eslint-disable semi */
 /* eslint-disable comma-dangle */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Alert,
   ScrollView,
@@ -18,12 +18,15 @@ import { FontAwesome, Feather } from '@expo/vector-icons';
 import { useTheme } from 'react-native-paper';
 import axios from 'axios';
 
+import { Context } from '../components/context';
+
 const SignInScreen = ({ navigation }) => {
   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const hostname = 'backend-ce-news.herokuapp.com';
   const url = `https://${hostname}`;
 
   const [Users, setUsers] = useState([]);
+  const { signIn } = useContext(Context);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +48,7 @@ const SignInScreen = ({ navigation }) => {
   const [valEmail, setEmail] = useState('');
   const [valPassword, setPassword] = useState('');
   const [valConfirmPassword, setConfirmPassword] = useState('');
+  const [iscreate, setIsCreate] = useState(null);
 
   const [data, setData] = useState({
     email: '',
@@ -87,6 +91,9 @@ const SignInScreen = ({ navigation }) => {
         .catch(function (error) {
           console.log(error);
         });
+      setIsCreate({
+        iscreate: true,
+      });
     }
   };
 
@@ -158,6 +165,18 @@ const SignInScreen = ({ navigation }) => {
       ...data,
       confirm_secureTextEntry: !data.confirm_secureTextEntry,
     });
+  };
+
+  const loginHandle = (valEmail, valPassword) => {
+    const fetchData = async () => {
+      const result = await axios(url);
+      setUsers(result.data);
+    };
+    fetchData();
+    const foundUser = Users.filter((item) => {
+      return valEmail === item.email && valPassword === item.password;
+    });
+    signIn(foundUser);
   };
 
   return (
@@ -297,17 +316,32 @@ const SignInScreen = ({ navigation }) => {
               </Text>
             </LinearGradient>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={[
-              styles.signIn,
-              { borderColor: '#009387', borderWidth: 1, marginTop: 15 },
-            ]}
-          >
-            <Text style={[styles.textSign, { color: '#009387' }]}>
-              Se connecter
-            </Text>
-          </TouchableOpacity>
+          {iscreate !== null ? (
+            <TouchableOpacity
+              onPress={() => {
+                loginHandle(valEmail, valPassword);
+              }}
+              style={[
+                styles.signIn,
+                { borderColor: '#009387', borderWidth: 1, marginTop: 15 },
+              ]}
+            >
+              <Text style={[styles.textSign, { color: '#009387' }]}>
+                Se connecter
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[
+                styles.signIn,
+                { borderColor: '#009387', borderWidth: 1, marginTop: 15 },
+              ]}
+            >
+              <Text style={[styles.textSign, { color: '#009387' }]}>
+                Se connecter
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </Animatable.View>
     </ScrollView>

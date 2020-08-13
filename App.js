@@ -31,7 +31,7 @@ function App() {
 
   const initialLoginState = {
     isLoading: true,
-    email: true,
+    email: null,
   };
 
   const CustomDefaultTheme = {

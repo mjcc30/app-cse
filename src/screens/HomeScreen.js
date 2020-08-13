@@ -38,15 +38,6 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchArticles(dispatch, () => setLoading(false));
-    const fetchData = async () => {
-      const result = await axios(baseUrl);
-      setData({
-        ...data,
-        banner: result.data,
-        backup: result.data,
-      });
-    };
-    fetchData();
   }, []);
 
   const onChangeSearch = ({ text }) => {
