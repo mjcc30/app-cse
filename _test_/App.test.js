@@ -9,7 +9,3 @@ jest.useFakeTimers();
 it('renders correctly', () => {
   renderer.create(<App />);
 });
-
-it(`Platform.OS works as expected`, () => {
-  expect(Platform.OS).toMatchSnapshot();
-});
