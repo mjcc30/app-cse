@@ -23,4 +23,3 @@ jobs:
           npm test
           expo doctor
           expo publish
-          expo build:android -t app-bundle
