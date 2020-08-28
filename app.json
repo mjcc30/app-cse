@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "cse-news",
+    "slug": "cse-news",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.conseilce.ceNews",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.conseilce.ceNews"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "description": "application cse-news en React Native avec un Backend en Node.js et Backoffice en React.js",
+    "githubUrl": "https://github.com/mjcc30/app-cse.git"
+  }
+}
