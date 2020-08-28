@@ -16,11 +16,7 @@
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
     "axios": "^0.19.2",
-<<<<<<< HEAD
     "expo": "^38.0.9",
-=======
-    "expo": "~38.0.8",
->>>>>>> 3ed93a2d35a4220c8197e51d3a7ecb593e0b987f
     "expo-status-bar": "^1.0.2",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
