@@ -35,6 +35,7 @@ const HomeDetailsScreen = ({ route, navigation }) => {
           <HTML style={styles.title} html={article.titre} />
           <HTML
             html={article}
+            ignoredStyles={['height', 'width']}
             imagesMaxWidth={Dimensions.get('window').width}
             onLinkPress={(evt, href) => {
               Linking.openURL(href);
