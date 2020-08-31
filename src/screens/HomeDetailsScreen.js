@@ -24,7 +24,13 @@ const HomeDetailsScreen = ({ route, navigation }) => {
   useEffect(() => {
     fetchSelectedArticle(dispatch, id);
     setLoading(false);
-  }, []);
+  }, [])
+
+  const HTMLStyles = {
+    h2: { fontSize: 20, color: '#303235' },
+    img: { marginBottom: 15 },
+    a: { color: '#039BE5', fontWeight: 'bold' }
+  }
 
   return (
     <View>
@@ -34,13 +40,14 @@ const HomeDetailsScreen = ({ route, navigation }) => {
         <ScrollView>
           <HTML style={styles.title} html={article.titre} />
           <HTML
-            html={article}
-            ignoredStyles={['height', 'width']}
             imagesMaxWidth={Dimensions.get('window').width}
+            tagsStyles={HTMLStyles}
+            baseFontStyle={{fontSize: 16, fontFamily: 'sans-serif-light', color: '#090f0f'} }
+            ignoredStyles={['height', 'width']}
+            html={article}
             onLinkPress={(evt, href) => {
-              Linking.openURL(href);
+              Linking.openURL(href)
             }}
-            tagsStyles={{ a: { color: 'red' } }}
             classesStyles={{}}
           />
         </ScrollView>
