@@ -1,55 +1,77 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
+  ActivityIndicator,
   View,
   Linking,
   StyleSheet,
   Image,
   Dimensions,
-} from "react-native";
-import axios from "axios";
-import HTML from "react-native-render-html";
-import { useDispatch, useSelector } from "react-redux";
+} from 'react-native';
+import axios from 'axios';
+import HTML from 'react-native-render-html';
+import { useDispatch, useSelector } from 'react-redux';
+import TrackPlayer from 'react-native-track-player';
 
-import { getSelectedArticle } from "../redux/selectors";
-import { fetchSelectedArticle } from "../api/articles";
+import { getSelectedArticle } from '../redux/selectors';
+import { fetchSelectedArticle } from '../api/articles';
 
 const HomeDetailsScreen = ({ route, navigation }) => {
   const { id } = route.params;
   const dispatch = useDispatch();
   const article = useSelector(getSelectedArticle);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchSelectedArticle(dispatch, id);
+    setLoading(false);
+    TrackPlayer.setupPlayer().then(() => {
+      // The player is ready to be used
+    });
   }, []);
 
-  const ENPOINT_URL_IMAGE = `"https://preprod-pac.pac-cse.fr/`;
-  const SRC = new RegExp(/(")\//g);
-  const content = article.contenu.replace(SRC, ENPOINT_URL_IMAGE);
-  console.log(content);
+  const HTMLStyles = {
+    h2: { fontSize: 20, color: '#303235' },
+    img: { marginBottom: 15 },
+    a: { color: '#039BE5', fontWeight: 'bold' },
+  };
 
   return (
-    <ScrollView>
-      {/*<Text>{JSON.stringify(data.contenu)}</Text>*/}
-      <HTML style={styles.title} html={article.titre} />
-      <HTML
-        html={content}
-        onLinkPress={(evt, href) => {
-          Linking.openURL(href);
-        }}
-      />
-    </ScrollView>
+    <View>
+      {loading ? (
+        <ActivityIndicator animating size="large" />
+      ) : (
+        <ScrollView>
+          <HTML style={styles.title} html={article.titre} />
+          <HTML
+            imagesMaxWidth={Dimensions.get('window').width}
+            tagsStyles={HTMLStyles}
+            baseFontStyle={{
+              fontSize: 16,
+              fontFamily: 'sans-serif-light',
+              color: '#090f0f',
+            }}
+            ignoredStyles={['height', 'width']}
+            html={article}
+            onLinkPress={(evt, href) => {
+              Linking.openURL(href);
+            }}
+            classesStyles={{}}
+          />
+        </ScrollView>
+      )}
+    </View>
   );
 };
 export default HomeDetailsScreen;
 
-var { height, width } = Dimensions.get("window");
+var { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   imagenew: {
     width: width / 3,
     height: width / 3,
-    resizeMode: "cover",
+    resizeMode: 'cover',
     borderRadius: 5,
   },
   title: {

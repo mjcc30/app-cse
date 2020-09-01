@@ -1,9 +1,10 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import renderer from 'react-test-renderer';
 
-jest.useFakeTimers();
+import App from '../App';
 
-import { Platform } from 'react-native';
+jest.useFakeTimers();
 
 it(`Platform.OS works as expected`, () => {
   expect(Platform.OS).toMatchSnapshot();

@@ -18,6 +18,7 @@ import axios from 'axios';
 import Swiper from 'react-native-swiper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSelector, useDispatch } from 'react-redux';
+import { Box } from 'react-native-design-utility';
 
 import { fetchArticles } from '../api/articles';
 import { getArticles } from '../redux/selectors';
@@ -94,20 +95,14 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <View style={{ flex: 1, backgroundColor: '#f8f8f8' }}>
-        <View style={{ width: width, backgroundColor: 'gray', padding: 8 }}>
+      <View style={{ flex: 1, backgroundColor: '#009387' }}>
+        <Box h={50} w="100%" px="sm" my="sm">
           <TextInput
-            placeholder="Search..."
-            style={{
-              height: 40,
-              borderColor: '#f2f2f2',
-              borderRadius: 10,
-              backgroundColor: 'white',
-              borderWidth: 1,
-              paddingHorizontal: 20,
-            }}
+            style={styles.input}
+            placeholder="Recherche..."
+            selectionColor="#039BE5"
           />
-        </View>
+        </Box>
         <View style={{ height: 200 }}>
           <Swiper>
             {articles.map((itemimag) => (
@@ -224,5 +219,13 @@ const styles = StyleSheet.create({
   },
   textTheme2: {
     color: 'white',
+  },
+  input: {
+    height: 40,
+    flex: 1,
+    backgroundColor: '#eeeeee',
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    fontSize: 18,
   },
 });

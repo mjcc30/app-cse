@@ -17,9 +17,10 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
           expo-packager: npm
-        name: Install and publish
+      - name: Install and publish
         run: |
           npm ci
           npm test
           expo doctor
           expo publish
+          expo build:android -t app-bundle
