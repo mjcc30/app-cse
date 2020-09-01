@@ -11,6 +11,7 @@ import {
 import axios from 'axios';
 import HTML from 'react-native-render-html';
 import { useDispatch, useSelector } from 'react-redux';
+import TrackPlayer from 'react-native-track-player';
 
 import { getSelectedArticle } from '../redux/selectors';
 import { fetchSelectedArticle } from '../api/articles';
@@ -24,13 +25,16 @@ const HomeDetailsScreen = ({ route, navigation }) => {
   useEffect(() => {
     fetchSelectedArticle(dispatch, id);
     setLoading(false);
-  }, [])
+    TrackPlayer.setupPlayer().then(() => {
+      // The player is ready to be used
+    });
+  }, []);
 
   const HTMLStyles = {
     h2: { fontSize: 20, color: '#303235' },
     img: { marginBottom: 15 },
-    a: { color: '#039BE5', fontWeight: 'bold' }
-  }
+    a: { color: '#039BE5', fontWeight: 'bold' },
+  };
 
   return (
     <View>
@@ -42,11 +46,15 @@ const HomeDetailsScreen = ({ route, navigation }) => {
           <HTML
             imagesMaxWidth={Dimensions.get('window').width}
             tagsStyles={HTMLStyles}
-            baseFontStyle={{fontSize: 16, fontFamily: 'sans-serif-light', color: '#090f0f'} }
+            baseFontStyle={{
+              fontSize: 16,
+              fontFamily: 'sans-serif-light',
+              color: '#090f0f',
+            }}
             ignoredStyles={['height', 'width']}
             html={article}
             onLinkPress={(evt, href) => {
-              Linking.openURL(href)
+              Linking.openURL(href);
             }}
             classesStyles={{}}
           />
